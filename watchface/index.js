@@ -53,29 +53,30 @@ WatchFace({
       x: 0, y: 0, w: 390, h: 450, color: C.YELLOW
     })
 
-    // Manga panel strip (Nobara)
-    block(16, 16, 358, 170, C.WHITE)
+    // Nobara manga portrait
+    block(16, 16, 178, 178, C.WHITE)
     hmUI.createWidget(hmUI.widget.IMG, {
-      x: 20, y: 20, src: "manga.png"
+      x: 20, y: 20, src: "portrait.png"
     })
 
+    // Date column
+    block(208, 16, 166, 86, C.RED)
+    const day = label(212, 20, 158, 44, 40, C.WHITE, "---")
+    const date = label(212, 62, 158, 36, 26, C.YELLOW, "-- ---")
+
+    block(208, 108, 166, 86, C.VIOLET)
+    const year = label(212, 112, 158, 78, 46, C.WHITE, "----")
+
     // Time
-    block(16, 204, 358, 112, C.WHITE)
-    const clock = label(20, 208, 350, 104, 92, C.BLACK, "--:--")
-
-    // Date
-    block(16, 332, 226, 40, C.RED)
-    const date = label(20, 336, 218, 32, 22, C.WHITE, "---")
-
-    block(256, 332, 118, 40, C.VIOLET)
-    const year = label(260, 336, 110, 32, 22, C.WHITE, "----")
+    block(16, 212, 358, 150, C.CYAN)
+    const clock = label(20, 216, 350, 142, 104, C.BLACK, "--:--")
 
     // Battery + steps
-    block(16, 388, 170, 40, C.GREEN)
-    const batt = label(20, 392, 162, 32, 20, C.BLACK, "BAT --%")
+    block(16, 378, 170, 50, C.GREEN)
+    const batt = label(20, 382, 162, 42, 22, C.BLACK, "BAT --%")
 
-    block(204, 388, 170, 40, C.ORANGE)
-    const steps = label(208, 392, 162, 32, 20, C.BLACK, "STEP -")
+    block(204, 378, 170, 50, C.ORANGE)
+    const steps = label(208, 382, 162, 42, 22, C.BLACK, "STEP -")
 
     // Sensors
     const time = hmSensor.createSensor(hmSensor.id.TIME)
@@ -95,9 +96,9 @@ WatchFace({
       clock.setProperty(hmUI.prop.MORE, {
         text: pad(time.hour) + ":" + pad(time.minute)
       })
+      day.setProperty(hmUI.prop.MORE, { text: days[time.week - 1] })
       date.setProperty(hmUI.prop.MORE, {
-        text: days[time.week - 1] + " " + pad(time.day) + " " +
-          months[time.month - 1]
+        text: pad(time.day) + " " + months[time.month - 1]
       })
       year.setProperty(hmUI.prop.MORE, { text: "" + time.year })
     }
