@@ -15,31 +15,106 @@ const C = {
 
 const SHADOW = 6
 const BORDER = 4
+const AOD_BORDER = 3
 
-// Hard-edged block: offset black shadow + black border + flat fill
-function block(x, y, w, h, color) {
+// Normal mode: offset black shadow + black border + flat fill.
+// AOD mode: same geometry, but only a colored outline on black (few lit pixels).
+function block(x, y, w, h, color, aod) {
+  const lvl = aod ? hmUI.show_level.ONLY_AOD : hmUI.show_level.ONLY_NORMAL
+
+  if (aod) {
+    hmUI.createWidget(hmUI.widget.FILL_RECT, {
+      x, y, w, h, color, show_level: lvl
+    })
+    hmUI.createWidget(hmUI.widget.FILL_RECT, {
+      x: x + AOD_BORDER,
+      y: y + AOD_BORDER,
+      w: w - AOD_BORDER * 2,
+      h: h - AOD_BORDER * 2,
+      color: C.BLACK,
+      show_level: lvl
+    })
+    return
+  }
+
   hmUI.createWidget(hmUI.widget.FILL_RECT, {
-    x: x + SHADOW, y: y + SHADOW, w, h, color: C.BLACK
+    x: x + SHADOW, y: y + SHADOW, w, h, color: C.BLACK, show_level: lvl
   })
-  hmUI.createWidget(hmUI.widget.FILL_RECT, { x, y, w, h, color: C.BLACK })
+  hmUI.createWidget(hmUI.widget.FILL_RECT, {
+    x, y, w, h, color: C.BLACK, show_level: lvl
+  })
   hmUI.createWidget(hmUI.widget.FILL_RECT, {
     x: x + BORDER,
     y: y + BORDER,
     w: w - BORDER * 2,
     h: h - BORDER * 2,
-    color
+    color,
+    show_level: lvl
   })
 }
 
-function label(x, y, w, h, size, color, text, align) {
+function label(x, y, w, h, size, color, text, aod) {
   return hmUI.createWidget(hmUI.widget.TEXT, {
     x, y, w, h,
     color,
     text_size: size,
-    align_h: align || hmUI.align.CENTER_H,
+    align_h: hmUI.align.CENTER_H,
     align_v: hmUI.align.CENTER_V,
-    text
+    text,
+    show_level: aod ? hmUI.show_level.ONLY_AOD : hmUI.show_level.ONLY_NORMAL
   })
+}
+
+// Builds the whole layout once per mode. Geometry is identical in both modes,
+// so the clock and every block stay put when the watch dims into AOD.
+function layout(aod) {
+  const lvl = aod ? hmUI.show_level.ONLY_AOD : hmUI.show_level.ONLY_NORMAL
+
+  // Background
+  hmUI.createWidget(hmUI.widget.FILL_RECT, {
+    x: 0, y: 0, w: 390, h: 450,
+    color: aod ? C.BLACK : C.YELLOW,
+    show_level: lvl
+  })
+
+  // Nobara manga portrait (dimmed in AOD)
+  block(16, 16, 178, 178, C.WHITE, aod)
+  hmUI.createWidget(hmUI.widget.IMG, {
+    x: 20, y: 20,
+    src: aod ? "portrait_aod.png" : "portrait.png",
+    show_level: lvl
+  })
+
+  // Date column
+  block(208, 16, 166, 86, C.RED, aod)
+  const day = label(212, 20, 158, 44, 40, aod ? C.RED : C.WHITE, "---", aod)
+  const date = label(
+    212, 62, 158, 36, 26, aod ? C.WHITE : C.YELLOW, "-- ---", aod
+  )
+
+  block(208, 108, 166, 86, C.VIOLET, aod)
+  const year = label(
+    212, 112, 158, 78, 46, aod ? C.VIOLET : C.WHITE, "----", aod
+  )
+
+  // Time (same position + size in both modes)
+  block(16, 212, 358, 150, C.CYAN, aod)
+  const clock = label(
+    20, 216, 350, 142, 104, aod ? C.CYAN : C.BLACK, "--:--", aod
+  )
+
+  // Battery + steps
+  block(16, 378, 170, 50, C.GREEN, aod)
+  const batt = label(
+    20, 382, 162, 42, 22, aod ? C.GREEN : C.BLACK, "BAT --%", aod
+  )
+
+  block(204, 378, 170, 50, C.ORANGE, aod)
+  const steps = label(
+    208, 382, 162, 42, 22, aod ? C.ORANGE : C.BLACK, "STEP -", aod
+  )
+
+  return { clock, day, date, year, batt, steps }
 }
 
 WatchFace({
@@ -48,35 +123,8 @@ WatchFace({
   },
 
   build() {
-    // Background
-    hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x: 0, y: 0, w: 390, h: 450, color: C.YELLOW
-    })
-
-    // Nobara manga portrait
-    block(16, 16, 178, 178, C.WHITE)
-    hmUI.createWidget(hmUI.widget.IMG, {
-      x: 20, y: 20, src: "portrait.png"
-    })
-
-    // Date column
-    block(208, 16, 166, 86, C.RED)
-    const day = label(212, 20, 158, 44, 40, C.WHITE, "---")
-    const date = label(212, 62, 158, 36, 26, C.YELLOW, "-- ---")
-
-    block(208, 108, 166, 86, C.VIOLET)
-    const year = label(212, 112, 158, 78, 46, C.WHITE, "----")
-
-    // Time
-    block(16, 212, 358, 150, C.CYAN)
-    const clock = label(20, 216, 350, 142, 104, C.BLACK, "--:--")
-
-    // Battery + steps
-    block(16, 378, 170, 50, C.GREEN)
-    const batt = label(20, 382, 162, 42, 22, C.BLACK, "BAT --%")
-
-    block(204, 378, 170, 50, C.ORANGE)
-    const steps = label(208, 382, 162, 42, 22, C.BLACK, "STEP -")
+    const normal = layout(false)
+    const aod = layout(true)
 
     // Sensors
     const time = hmSensor.createSensor(hmSensor.id.TIME)
@@ -92,20 +140,27 @@ WatchFace({
 
     const pad = (value) => (value < 10 ? "0" + value : "" + value)
 
+    const set = (widget, text) => widget.setProperty(hmUI.prop.MORE, { text })
+
     const updateTime = () => {
-      clock.setProperty(hmUI.prop.MORE, {
-        text: pad(time.hour) + ":" + pad(time.minute)
+      const clockText = pad(time.hour) + ":" + pad(time.minute)
+      const dayText = days[time.week - 1]
+      const dateText = pad(time.day) + " " + months[time.month - 1]
+      const yearText = "" + time.year
+
+      ;[normal, aod].forEach((ui) => {
+        set(ui.clock, clockText)
+        set(ui.day, dayText)
+        set(ui.date, dateText)
+        set(ui.year, yearText)
       })
-      day.setProperty(hmUI.prop.MORE, { text: days[time.week - 1] })
-      date.setProperty(hmUI.prop.MORE, {
-        text: pad(time.day) + " " + months[time.month - 1]
-      })
-      year.setProperty(hmUI.prop.MORE, { text: "" + time.year })
     }
 
     const updateStats = () => {
-      batt.setProperty(hmUI.prop.MORE, { text: "BAT " + battery.current + "%" })
-      steps.setProperty(hmUI.prop.MORE, { text: "STEP " + step.current })
+      ;[normal, aod].forEach((ui) => {
+        set(ui.batt, "BAT " + battery.current + "%")
+        set(ui.steps, "STEP " + step.current)
+      })
     }
 
     updateTime()

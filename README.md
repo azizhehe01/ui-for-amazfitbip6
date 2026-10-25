@@ -108,7 +108,7 @@ zeus build       # produces a .zab package in dist/
 
 - [x] Rename app from `Empty` to `Brutalism JJK` in `app.json`
 - [ ] Color tint on the portrait
-- [ ] Always-on display (AOD) version
+- [x] Always-on display (AOD) version
 - [ ] More JJK characters
 
 ---
