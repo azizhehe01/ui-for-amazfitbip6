@@ -1,6 +1,6 @@
 import "../shared/device-polyfill"
 
-// Neo-brutalist JJK palette (Nobara red, hat-band yellow, uniform navy)
+// Neo-brutalist anime palette (red, hat-band yellow, uniform navy)
 const C = {
   BLACK: 0x000000,
   WHITE: 0xffffff,
@@ -119,7 +119,7 @@ function layout(aod) {
 
 WatchFace({
   onInit() {
-    console.log("Brutalism JJK initialized")
+    console.log("Brutalism Anime initialized")
   },
 
   build() {
@@ -171,6 +171,6 @@ WatchFace({
   },
 
   onDestroy() {
-    console.log("Brutalism JJK destroyed")
+    console.log("Brutalism Anime destroyed")
   }
 })

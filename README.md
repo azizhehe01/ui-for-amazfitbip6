@@ -1,19 +1,19 @@
 <div align="center">
 
 # ▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▜
-# BRUTALISM × JJK
+# BRUTALISM × ANIME
 # ▙▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟
 
-**HARD EDGES. LOUD COLORS. NOBARA ON YOUR WRIST.**
+**HARD EDGES. LOUD COLORS. MANGA ON YOUR WRIST.**
 
 ![Amazfit Bip 6](https://img.shields.io/badge/AMAZFIT-BIP%206-000000?style=for-the-badge&labelColor=FFD60A)
 ![Zepp OS](https://img.shields.io/badge/ZEPP%20OS-WATCHFACE-FF3B4E?style=for-the-badge&labelColor=000000)
 ![Style](https://img.shields.io/badge/STYLE-NEO--BRUTALIST-7B2FF7?style=for-the-badge&labelColor=000000)
-![Theme](https://img.shields.io/badge/THEME-JUJUTSU%20KAISEN-00E5FF?style=for-the-badge&labelColor=000000)
+![Theme](https://img.shields.io/badge/THEME-ANIME-00E5FF?style=for-the-badge&labelColor=000000)
 
 <br>
 
-<img src="docs/preview.png" alt="Brutalism JJK watchface running on Amazfit Bip 6" width="300">
+<img src="docs/preview.png" alt="Brutalism Anime watchface running on Amazfit Bip 6" width="300">
 
 <br>
 
@@ -25,7 +25,7 @@
 
 A watchface for the **Amazfit Bip 6** (390×450) with a **neo-brutalist** look:
 flat color blocks, thick black borders, hard offset shadows, zero gradients.
-The anime part is **Kugisaki Nobara** (*Jujutsu Kaisen*), drawn in manga ink.
+The anime part is a manga-style character portrait drawn in ink.
 
 No soft stuff. No blur. No rounded corners. Just blocks.
 
@@ -35,7 +35,7 @@ No soft stuff. No blur. No rounded corners. Just blocks.
 
 | BLOCK | COLOR | DATA |
 |:------|:------|:-----|
-| 🖼 PORTRAIT | `WHITE` | Nobara, manga style |
+| 🖼 PORTRAIT | `WHITE` | Manga-style portrait |
 | 🟥 DAY + DATE | `#FF3B4E` | `SUN` / `25 OCT` |
 | 🟪 YEAR | `#7B2FF7` | `2026` |
 | 🟦 TIME | `#00E5FF` | `HH:MM`, updates every minute |
@@ -73,7 +73,7 @@ brutalism-anime/
 ├── assets/
 │   └── 390x450-amazfit-bip-6/
 │       ├── icon.png
-│       └── portrait.png    # Nobara, 170x170
+│       └── portrait.png    # manga portrait, 170x170
 └── docs/
     └── preview.png         # screenshot used in this README
 ```
@@ -106,10 +106,10 @@ zeus build       # produces a .zab package in dist/
 
 ## ■ TODO
 
-- [x] Rename app from `Empty` to `Brutalism JJK` in `app.json`
+- [x] Rename app from `Empty` to `Brutalism Anime` in `app.json`
 - [ ] Color tint on the portrait
 - [x] Always-on display (AOD) version
-- [ ] More JJK characters
+- [ ] More anime characters
 
 ---
 
