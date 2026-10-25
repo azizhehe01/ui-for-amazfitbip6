@@ -2,14 +2,14 @@
   "configVersion": "v2",
   "app": {
     "appId": 10013,
-    "appName": "Empty",
+    "appName": "Brutalism JJK",
     "appType": "watchface",
     "version": {
       "code": 1,
       "name": "1.0"
     },
     "vender": "zepp",
-    "description": "Empty watchface",
+    "description": "Neo-brutalist Jujutsu Kaisen watchface featuring Kugisaki Nobara",
     "icon": "icon.png"
   },
   "permissions": [],
@@ -49,7 +49,7 @@
   },
   "i18n": {
     "en-US": {
-      "appName": "Empty"
+      "appName": "Brutalism JJK"
     }
   },
   "defaultLanguage": "en-US",
