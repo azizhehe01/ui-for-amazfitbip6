@@ -53,37 +53,29 @@ WatchFace({
       x: 0, y: 0, w: 390, h: 450, color: C.YELLOW
     })
 
-    // Nobara portrait
-    block(16, 16, 178, 178, C.RED)
+    // Manga panel strip (Nobara)
+    block(16, 16, 358, 170, C.WHITE)
     hmUI.createWidget(hmUI.widget.IMG, {
-      x: 20, y: 20, src: "nobara.png"
+      x: 20, y: 20, src: "manga.png"
     })
 
-    // Title blocks
-    block(208, 16, 166, 82, C.CYAN)
-    label(212, 20, 158, 74, 66, C.BLACK, "JJK")
-
-    block(208, 112, 166, 82, C.PINK)
-    label(212, 116, 158, 26, 20, C.WHITE, "KUGISAKI")
-    label(212, 142, 158, 48, 36, C.BLACK, "NOBARA")
-
     // Time
-    block(16, 212, 358, 112, C.WHITE)
-    const clock = label(20, 216, 350, 104, 92, C.BLACK, "--:--")
+    block(16, 204, 358, 112, C.WHITE)
+    const clock = label(20, 208, 350, 104, 92, C.BLACK, "--:--")
 
     // Date
-    block(16, 340, 226, 40, C.RED)
-    const date = label(20, 344, 218, 32, 22, C.WHITE, "---")
+    block(16, 332, 226, 40, C.RED)
+    const date = label(20, 336, 218, 32, 22, C.WHITE, "---")
 
-    block(256, 340, 118, 40, C.VIOLET)
-    const year = label(260, 344, 110, 32, 22, C.WHITE, "----")
+    block(256, 332, 118, 40, C.VIOLET)
+    const year = label(260, 336, 110, 32, 22, C.WHITE, "----")
 
     // Battery + steps
-    block(16, 396, 170, 40, C.GREEN)
-    const batt = label(20, 400, 162, 32, 20, C.BLACK, "BAT --%")
+    block(16, 388, 170, 40, C.GREEN)
+    const batt = label(20, 392, 162, 32, 20, C.BLACK, "BAT --%")
 
-    block(204, 396, 170, 40, C.ORANGE)
-    const steps = label(208, 400, 162, 32, 20, C.BLACK, "STEP -")
+    block(204, 388, 170, 40, C.ORANGE)
+    const steps = label(208, 392, 162, 32, 20, C.BLACK, "STEP -")
 
     // Sensors
     const time = hmSensor.createSensor(hmSensor.id.TIME)
