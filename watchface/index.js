@@ -18,13 +18,13 @@ const BORDER = 4
 const AOD_BORDER = 3
 
 // Normal mode: offset black shadow + black border + flat fill.
-// AOD mode: same geometry, but only a colored outline on black (few lit pixels).
+// AOD mode: same geometry, but only a white outline on black (few lit pixels).
 function block(x, y, w, h, color, aod) {
   const lvl = aod ? hmUI.show_level.ONLY_AOD : hmUI.show_level.ONLY_NORMAL
 
   if (aod) {
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x, y, w, h, color, show_level: lvl
+      x, y, w, h, color: C.WHITE, show_level: lvl
     })
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
       x: x + AOD_BORDER,
@@ -87,31 +87,31 @@ function layout(aod) {
 
   // Date column
   block(208, 16, 166, 86, C.RED, aod)
-  const day = label(212, 20, 158, 44, 40, aod ? C.RED : C.WHITE, "---", aod)
+  const day = label(212, 20, 158, 44, 40, C.WHITE, "---", aod)
   const date = label(
     212, 62, 158, 36, 26, aod ? C.WHITE : C.YELLOW, "-- ---", aod
   )
 
   block(208, 108, 166, 86, C.VIOLET, aod)
   const year = label(
-    212, 112, 158, 78, 46, aod ? C.VIOLET : C.WHITE, "----", aod
+    212, 112, 158, 78, 46, C.WHITE, "----", aod
   )
 
   // Time (same position + size in both modes)
   block(16, 212, 358, 150, C.CYAN, aod)
   const clock = label(
-    20, 216, 350, 142, 104, aod ? C.CYAN : C.BLACK, "--:--", aod
+    20, 216, 350, 142, 104, aod ? C.WHITE : C.BLACK, "--:--", aod
   )
 
   // Battery + steps
   block(16, 378, 170, 50, C.GREEN, aod)
   const batt = label(
-    20, 382, 162, 42, 22, aod ? C.GREEN : C.BLACK, "BAT --%", aod
+    20, 382, 162, 42, 22, aod ? C.WHITE : C.BLACK, "BAT --%", aod
   )
 
   block(204, 378, 170, 50, C.ORANGE, aod)
   const steps = label(
-    208, 382, 162, 42, 22, aod ? C.ORANGE : C.BLACK, "STEP -", aod
+    208, 382, 162, 42, 22, aod ? C.WHITE : C.BLACK, "STEP -", aod
   )
 
   return { clock, day, date, year, batt, steps }
